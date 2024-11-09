@@ -1,0 +1,247 @@
+{%include 'farmer_header.html'%}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/admin_home">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+
+  <center>
+    <section class="section dashboard">
+      <h2>Harvesting</h2>
+
+      {%if qa%}
+
+<form action="" method="post" enctype="multipart/form-data">
+    <table align="center">
+        <tr>
+            <th>Name : </th>
+            <td><input type="text" name="name" value="{{ qa.name }}" class="form form-control" required></td>
+        </tr>
+        <tr>
+            <th>Variety :</th>
+            <td><input type="text" name="vt" value="{{qa.variety}}" class="form-control" required></td>
+        </tr>
+        <tr>
+            <th>Internal_id :</th>
+            <td><input type="text" name="ii" value="{{qa.internal_id}}" class="form-control" required></td>
+        </tr> 
+        <tr>
+            <th>Location Type :</th>
+            <td>            
+                <select name="lt" class="form-control" required>
+                    <option value="" disabled selected>Select Location</option>
+        
+                        <option value="Field">Field</option>
+                        <option value="GreenHouse">GreenHouse</option>
+                        <option value="GrowRoom">GrowRoom</option>
+                        <option value="other">Other</option>
+    
+                </select>
+            </td>
+        </tr> 
+
+
+        <tr>
+            <th>Assigned Worker :</th>
+            <td>
+                <select name="worker" class="form-control" required>
+                    <option value="" disabled selected>Select Worker</option>
+                    {% for worker in w %}
+                        <option value="{{ worker.id }}">{{ worker.first_name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+
+        <!-- <tr>
+            <th>Planting Formate :</th>
+            <td>           
+                <select name="pf" class="form-control" required>
+                    <option value="" disabled selected>Select formate</option>
+        
+                        <option value="Planted In Bed">Planted In Bed</option>
+                        <option value="corner Crop">corner Crop</option>
+                        <option value="Row Crop">Row Crop</option>
+                        <option value="other">Other</option>
+    
+                </select>
+            </td>
+        </tr>  -->
+        <tr>
+            <th>Size :</th>
+            <td><input type="text" name="size" value="{{qa.size}}" class="form-control" required></td>
+        </tr> 
+        <tr>
+            <th>Harvesting_Date :</th>
+            <td><input type="date" name="hd" value="{{qa.harvesting_date}}"  min="{{ today }}"  class="form-control" required></td>
+        </tr> 
+    
+        <tr>
+            <td colspan="2" align="center"><input type="submit" name="update" value="Update" class="btn btn-primary"></td>
+        </tr>
+    </table>
+    
+</form>
+
+{%else%}
+
+<form action="" method="post" enctype="multipart/form-data">
+    <table align="center" class="table table-bordered">
+        <tr>
+            <th>Name : </th>
+            <td><input type="text" name="name"  class="form form-control" required></td>
+        </tr>
+        <tr>
+            <th>Crop Type :</th>
+            <td><input type="text" name="vts" class="form-control" value="{{type}}" required></td>
+        </tr>
+        <tr>
+            <th>Variety :</th>
+            <td><input type="text" name="vt" class="form-control" value="{{variety}}" required></td>
+        </tr>
+        <tr>
+            <th>Internal_id :</th>
+            <td><input type="text" name="ii" class="form-control" value="{{internal_id}}" required></td>
+        </tr> 
+
+        <tr>
+            <th>Location Type :</th>
+            <td>            
+                <select name="lt" class="form-control" required>
+                    <option value="" disabled selected>Select Location</option>
+        
+                        <option value="Field">Field</option>
+                        <option value="GreenHouse">GreenHouse</option>
+                        <option value="GrowRoom">GrowRoom</option>
+                        <option value="other">Other</option>
+    
+                </select>
+            </td>
+        </tr> 
+
+        <tr>
+            <th>Assigned Worker :</th>
+            <td>
+                <select name="worker" class="form-control" required>
+                    <option value="" disabled selected>Select Worker</option>
+                    {% for worker in w %}
+                        <option value="{{ worker.id }}">{{ worker.first_name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+
+
+
+        <!-- <tr>
+            <th>Planting Formate :</th>
+            <td>           
+                <select name="pf" class="form-control" required>
+                    <option value="" disabled selected>Select formate</option>
+        
+                        <option value="Planted In Bed">Planted In Bed</option>
+                        <option value="corner Crop">corner Crop</option>
+                        <option value="Row Crop">Row Crop</option>
+                        <option value="other">Other</option>
+    
+                </select>
+            </td>
+        </tr>  -->
+        <tr>
+            <th>Size :</th>
+            <td><input type="text" name="size" class="form-control" required></td>
+        </tr> 
+        <tr>
+            <th>Harvest_Date :</th>
+            <td><input type="date" name="hd"  min="{{ today }}"   class="form-control" required></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" name="submit" value="Submit" class="btn btn-info">
+            </td>
+        </tr>
+    </table>
+</form>
+{%endif%}
+<br>
+<br>
+
+<!-- 
+<table align="center">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Plant Name</th>
+        <th>Variety</th>
+        <th>Internal_id</th>
+        <th>Location_type</th>
+        <th>Size</th>
+        <th>Harvesting_date</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
+</thead>
+    {% for row in q %}
+    <tbody>
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{row.name}}</td>
+        <td>{{row.variety}}</td>
+        <td>{{row.internal_id}}</td>
+        <td>{{row.location_type}}</td>
+        <td>{{row.size}}</td>
+        <td>{{row.harvesting_date}}</td>
+        <td><a href="/harvesting_update/{{row.id}}" class="btn btn-primary">Update</a></td>
+        <td><a href="/harvesting_delete/{{row.id}}" class="btn btn-danger">Delete</a></td>
+    </tr>
+</tbody>
+
+    {%endfor%}
+</table>
+     -->
+  
+          </div>
+        </section>
+      </center>
+
+      
+    <style>
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .form-container {
+            text-align: center;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th {
+            background: #36545d;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+    </style>

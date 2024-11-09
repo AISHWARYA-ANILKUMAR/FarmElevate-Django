@@ -1,0 +1,234 @@
+{% include 'farmer_header.html' %}
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin_home">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <center>
+        <!-- <form id="search-form" method="GET" action="">
+            <input type="text" name="sname" placeholder="task_name">
+            <input type="text" name="sname" placeholder="Priority" >
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" >
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" >
+        </form> -->
+            
+
+<form action="" method="post">
+    {%csrf_token%}
+<table class="table" style="width: 900px;">
+    <tr>
+        <td><input type="text" name="sname" id="" placeholder="search here" class="form-control"></td>
+        <td><input type="date" name="start_date" id="" placeholder="search here" class="form-control"></td>
+        <td><input type="date" name="end_date" value="" id="" placeholder="search here" class="form-control"></td>
+        <td>
+            <input type="submit" name="search" value="SEARCH" id="" class="btn btn-info">
+        </td>
+        <td><button onclick="window.print()" class="btn btn-secondary">Print</button>
+        </td>
+    </tr>
+</table>
+</form>
+
+
+            <table align="center" class="table table-bordered" id="tasksTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Task Name</th>
+                        <th>Description</th>
+                        <th>Priority</th>
+                        <th>Due Date</th>
+                        <th>Assigned Worker</th>
+                        <!-- <th>Status</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in obj %}
+                    <tr>
+                        <td>{{ obj.row_number }}</td>
+                        <td>{{ obj.task_name }}</td>
+                        <td>{{ obj.description }}</td>
+                        <td style="color: {% if obj.Priority == 'High' %}red{% elif obj.Priority == 'Medium' %}orange{% elif obj.Priority == 'Low' %}grey{% endif %};">
+                            {{ obj.Priority|title }}
+                        </td>
+                        <!-- <td>{{ row.due_date|date:'m/d/Y' }}</td> -->
+                        <td>{{ obj.due_date|date:'Y-m-d'}}</td>
+                        <td>{{ obj.assigned_worker.first_name }}</td>
+                        <!-- <td>{{ row.status }}</td> -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+             
+            </table>
+
+
+<h3>TOTAL TASKS :{{total_task}}</h3>
+
+     
+
+        </section>
+        <!-- <div class="pagination">
+            <span class="step-links">
+                {% if obj.has_previous %}
+                <a href="?page={{obj.previous_page_number}}" class="btn">&laquo; Previous</a>
+                {% endif %}
+        
+                <span class="current">
+                    Page {{obj.number}} of {{obj.paginator.num_pages}}.
+                </span>
+        
+                {% if obj.has_next %}
+                <a href="?page={{obj.next_page_number}}" class="btn">Next &raquo;</a>
+                {% endif %}
+            </span>
+        </div> -->
+
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if obj.has_previous %}
+                    <a href="?page=1&sname={{ sname }}&start_date={{ start_date }}&end_date={{ end_date }}">first</a>
+                    <a href="?page={{ obj.previous_page_number }}&sname={{ sname }}&start_date={{ start_date }}&end_date={{ end_date }}">previous</a>
+                {% endif %}
+        
+                <span class="current">
+                    Page {{ obj.number }} of {{ obj.paginator.num_pages }}.
+                </span>
+        
+                {% if obj.has_next %}
+                    <a href="?page={{ obj.next_page_number }}&sname={{ sname }}&start_date={{ start_date }}&end_date={{ end_date }}">next</a>
+                    <a href="?page={{ obj.paginator.num_pages }}&sname={{ sname }}&start_date={{ start_date }}&end_date={{ end_date }}">last</a>
+                {% endif %}
+            </span>
+        </div>
+
+
+
+
+    </center>
+
+    <style>
+        .btn {
+            padding: 3px 10px; /* Adjust padding to control button size */
+            font-size: 14px; /* Adjust font size */
+        }
+                
+                
+     .pagination {
+            margin: 20px 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+        .pagination .step-links a {
+            display: inline-block;
+            padding: 6px 12px; /* Adjusted padding for smaller buttons */
+            margin: 0 4px;
+            background-color: #007bff; /* Light blue background */
+            border: 1px solid #007bff; /* Light blue border */
+            text-decoration: none;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 14px; /* Adjusted font size */
+        }
+        .pagination .step-links a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            border-color: #0056b3;
+        }
+        .pagination .step-links .current {
+            display: inline-block;
+            padding: 6px 12px; /* Adjusted padding for smaller current page indicator */
+            margin: 0 4px;
+            background-color: #f2f2f2;
+            color: #333;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px; /* Adjusted font size */
+        }
+    
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .form-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background: #36545d;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+
+    <script>
+        function searchTasks() {
+            // Get the input values
+            var taskNameInput = document.getElementById('searchTaskName').value.toLowerCase();
+            var fromDateInput = document.getElementById('searchFromDate').value;
+            var toDateInput = document.getElementById('searchToDate').value;
+            var workerInput = document.getElementById('searchWorker').value.toLowerCase();
+            var statusInput = document.getElementById('searchStatus').value.toLowerCase();
+
+            // Get the table and rows
+            var table = document.getElementById('tasksTable');
+            var tr = table.getElementsByTagName('tr');
+
+            // Loop through all table rows, and hide those that don't match the search query
+            for (var i = 1; i < tr.length; i++) {
+                var taskName = tr[i].getElementsByTagName('td')[1].innerText.toLowerCase();
+                var dueDate = tr[i].getElementsByTagName('td')[4].innerText;
+                var worker = tr[i].getElementsByTagName('td')[5].innerText.toLowerCase();
+                var status = tr[i].getElementsByTagName('td')[6].innerText.toLowerCase();
+
+                // Convert table due date to a comparable format (YYYY-MM-DD)
+                var formattedDueDate = new Date(dueDate);
+                alert(formattedDueDate);
+
+                // Check if the due date is within the range
+                var isDateInRange = (!fromDateInput || formattedDueDate >= new Date(fromDateInput)) &&
+                                    (!toDateInput || formattedDueDate <= new Date(toDateInput));
+
+                if (
+                    (taskName.indexOf(taskNameInput) > -1 || !taskNameInput) &&
+                    isDateInRange &&
+                    (worker.indexOf(workerInput) > -1 || !workerInput) &&
+                    (status.indexOf(statusInput) > -1 || !statusInput)
+                ) {
+                    tr[i].style.display = '';
+                } else {
+                    tr[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
+</main><!-- End #main -->

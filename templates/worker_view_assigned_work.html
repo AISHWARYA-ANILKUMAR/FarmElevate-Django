@@ -1,0 +1,93 @@
+{% include 'worker_header.html' %}
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin_home">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <center>
+        <section class="section dashboard">
+            <div class="form-container">
+                <form action="" method="get">
+                    {% csrf_token %}
+                    <table class="table">
+                        <tr>
+                            <td><input type="text" name="sname" placeholder="search here" class="form-control" value="{{ sname }}"></td>
+                            <td><input type="date" name="start_date" class="form-control" value="{{ start_date }}"></td>
+                            <td><input type="date" name="end_date" class="form-control" value="{{ end_date }}"></td>
+                            <td><input type="submit" name="search" value="SEARCH" class="btn btn-info"></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            
+            <table align="center" class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Task Name</th>
+                        <th>Description</th>
+                        <th>Priority</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in filtered_tasks %}
+                    <tr>
+                        <td>{{ task.row_number }}</td>
+                        <td>{{ task.task_name }}</td>
+                        <td>{{ task.description }}</td>
+                        <td style="color: {% if task.Priority == 'High' %}red{% elif task.Priority == 'Medium' %}orange{% elif task.Priority == 'Low' %}grey{% endif %};">
+                            {{ task.Priority|title }}
+                        </td>
+                        <td>{{ task.due_date }}</td>
+                        <td>{{ task.status }}</td>
+
+                        {% if task.status == 'pending' %}
+                        <td><a href="/task_completed/{{ task.id }}" class="btn btn-success">Done</a></td>
+                        {% else %}
+                        <td>{{ task.status }}</td>
+
+                        {% endif %}
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6">No tasks found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </center>
+
+
+    <div class="pagination" style="margin-left: 26em;">
+        <span class="step-links">
+            <center>
+            {% if page_obj.has_previous %}
+                <a href="?page=1&{{ query_string }}" class="btn btn-info btn-sm">&laquo; First</a>
+                <a href="?page={{ page_obj.previous_page_number }}&{{ query_string }}" class="btn btn-info btn-sm">&lsaquo; Previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}&{{ query_string }}" class="btn btn-info btn-sm">Next &rsaquo;</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}&{{ query_string }}" class="btn btn-info btn-sm">Last &raquo;</a>
+            {% endif %}
+        </center>
+
+        </span>
+    </div>
+
+</main>

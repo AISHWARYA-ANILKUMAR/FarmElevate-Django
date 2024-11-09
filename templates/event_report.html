@@ -1,0 +1,68 @@
+{% include 'farmer_header.html' %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/admin_home">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Ongoing and Upcoming Events Report</title>
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th, td {
+                border: 1px solid black;
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Ongoing and Upcoming Events Report</h1>
+        <button onclick="window.print()" class="btn btn-primary" align="center">Print Report</button> <!-- Print button -->
+        <br><br><br><br>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Event Title</th>
+                    <th>Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Priority</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in q %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ row.Event_title }}</td>
+                    <td>{{ row.Description }}</td>
+                    <td>{{ row.Start_date }}</td>
+                    <td>{{ row.End_date }}</td>
+                    <td style="color: {% if row.Priority == 'red' %}red{% elif row.Priority == 'yellow' %}yellow{% elif row.Priority == 'orange' %}orange{% endif %};">
+                        {{ row.Priority|title }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+    </html>
+</main>

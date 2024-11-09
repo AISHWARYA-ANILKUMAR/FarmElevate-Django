@@ -1,0 +1,237 @@
+{%include 'farmer_header.html'%}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/admin_home">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+
+  <center>
+    <section class="section dashboard">
+      <h2>Crop</h2>
+
+      {%if qa%}
+
+<form action="" method="post" enctype="multipart/form-data">
+    <table align="center">
+        <tr>
+            <th>Crop Type :</th>
+            <td><input type="text" name="ct" class="form-control" value="{{qa.type}}" required></td>
+        </tr>
+        <tr>
+            <th>Variety :</th>
+            <td><input type="text" name="vt" class="form-control" value="{{qa.variety}}" required></td>
+        </tr>
+        <tr>
+            <th>Internal_id :</th>
+            <td><input type="text" name="ii" value="{{qa.internal_id}}" class="form-control" required></td>
+        </tr> 
+        <tr>
+            <td colspan="2" align="center"><input type="submit" name="update" value="Update" class="btn btn-primary"></td>
+        </tr>
+    </table>
+    
+</form>
+
+{%else%}
+
+<form action="" method="post" enctype="multipart/form-data">
+    <table align="center" class="table table-bordered">
+        <tr>
+            <th>Crop Type :</th>
+            <td><input type="text" name="ct" class="form-control" required></td>
+        </tr>
+        <tr>
+            <th>Variety :</th>
+            <td><input type="text" name="vt" class="form-control" required></td>
+        </tr>
+        <tr>
+            <th>Internal_id :</th>
+            <td><input type="text" name="ii" class="form-control" required></td>
+        </tr> 
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <input type="submit" name="submit" value="Submit" class="btn btn-primary">
+            </td>
+        </tr>
+    </table>
+</form>
+{%endif%}
+<br>
+<br>
+
+
+<table align="center">
+    <thead>
+    <tr>
+        <!-- <th>#</th>
+        <th>Crop Type</th>
+        <th>Variety</th>
+        <th>Internal_id</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr> -->
+</thead>
+    {% for row in q %}
+    <tbody>
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{row.type}}</td>
+        <td>{{row.variety}}</td>
+        <td>{{row.internal_id}}</td>
+        <td><a href="/crop_update/{{row.id}}" class="btn btn-primary">Update</a></td>
+        <td><a href="/crop_delete/{{row.id}}" class="btn btn-danger">Delete</a></td>
+        <td><a href="/plant_add/{{row.id}}/{{row.type}}/{{row.variety}}/{{row.internal_id}}" class="btn btn-success">Plant</a></td>
+        <td><a href="/harvest_add/{{row.id}}/{{row.type}}/{{row.variety}}/{{row.internal_id}}" class="btn btn-secondary">Harvest</a></td>
+
+        
+    </tr>
+</tbody>
+
+    {%endfor%}
+</table>
+    
+  
+          </div>
+        </section>
+      </center>
+
+        <style>
+            th, td {
+                padding: 10px;
+                border: 1px solid #ccc;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            .form-container {
+                text-align: center;
+            }
+            
+            table {
+                border-collapse: collapse;
+                width: 80%;
+                background: #fff;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+            th, td {
+                padding: 10px;
+                text-align: left;
+            }
+            th {
+                background: #36545d;
+                color: #fff;
+            }
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+            tr:hover {
+                background-color: #ddd;
+            }
+        </style>
+    
+      </main><!-- End #main -->
+
+
+
+
+<script src="
+https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+    </script>
+<script>
+    $(function() {
+        $("input[name='name']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+        $("input[name='lname']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+		$("input[name='hname']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+		$("input[name='street']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+		$("input[name='city']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+		$("input[name='state']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+        // $("input[name='dob']").on('input', function(e) {
+        //     $(this).val($(this).val().replace(/[^0-9/]/g, ''));
+
+        // });
+        
+        $("input[name='phone']").on('input', function(e) {
+    // Get the current value of the input field
+    var inputValue = $(this).val();
+
+    // Remove any non-numeric characters
+    var numericValue = inputValue.replace(/[^0-9]/g, '');
+
+    // Limit the numeric value to 10 characters
+    var truncatedValue = numericValue.substring(0, 10);
+
+    // Set the truncated value back to the input field
+    $(this).val(truncatedValue);
+});
+        $("input[name='pin']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9]/g, ''));
+            
+        });
+        $("input[name='email']").on('input', function(e) {
+              var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{1,}/.test(this.value);
+                if(!re) {
+                    $('#eerror').show();
+                } else {
+                    $('#eerror').hide();
+                }
+
+        });
+        $("input[name='address']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z0-9()/. ]/g, ''));
+
+        });
+        $("input[name='place']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+            
+        $("input[name='pwd']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9A-Za-z@/. ]/g, ''));
+            
+        });
+    });
+
+
+
+   var check = function() {
+  if (document.getElementById('password').value ==
+    document.getElementById('confirm_password').value) {
+    document.getElementById('message').style.color = 'green';
+    document.getElementById('message').innerHTML = 'matching';
+  } else {
+    document.getElementById('message').style.color = 'red';
+    document.getElementById('message').innerHTML = 'not matching';
+  }
+}
+</script>
+
+

@@ -1,0 +1,181 @@
+{% include 'farmer_header.html' %}
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin_home">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <center>
+        <section class="section dashboard">
+
+            <table align="center" class="table table-bordered" id="tasksTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Worker Name</th>
+                        <th>DOB</th>
+                        <th>Gender</th>
+                        <th>phone</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in obj %}
+                    <tr>
+                        <td>{{ obj.row_number }}</td>
+                        <td>{{ obj.first_name }}  {{ obj.last_name }}</td>
+                        <td>{{ obj.dob }}</td>
+                        <td>{{ obj.gender}}</td>
+                        <td>{{ obj.phone }}</td>
+                        <td>{{ obj.email }}</td>
+                        <td>{{ obj.address }}</td>
+                        <td>{{ obj.country}}</td>
+                        {% if obj.login.usertype == 'pending' %}
+                        <td><a href="/w_accept/{{obj.login_id}}" class="btn btn-primary">Accept</a></td>
+                        <td><a href="/w_reject/{{obj.login_id}}" class="btn btn-danger">Reject</a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="pagination">
+                <span class="step-links">
+                    {% if obj.has_previous %}
+                    <a href="?page={{obj.previous_page_number}}" class="btn">&laquo; Previous</a>
+                    {% endif %}
+            
+                    <span class="current">
+                        Page {{obj.number}} of {{obj.paginator.num_pages}}.
+                    </span>
+            
+                    {% if obj.has_next %}
+                    <a href="?page={{obj.next_page_number}}" class="btn">Next &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+                   
+        </section>
+    </center>
+
+    <style>
+
+
+
+
+
+
+.btn {
+        padding: 3px 10px; /* Adjust padding to control button size */
+        font-size: 14px; /* Adjust font size */
+    }
+            
+            
+ .pagination {
+        margin: 20px 0;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    .pagination .step-links a {
+        display: inline-block;
+        padding: 6px 12px; /* Adjusted padding for smaller buttons */
+        margin: 0 4px;
+        background-color: #007bff; /* Light blue background */
+        border: 1px solid #007bff; /* Light blue border */
+        text-decoration: none;
+        color: #fff;
+        border-radius: 4px;
+        font-size: 14px; /* Adjusted font size */
+    }
+    .pagination .step-links a:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+        border-color: #0056b3;
+    }
+    .pagination .step-links .current {
+        display: inline-block;
+        padding: 6px 12px; /* Adjusted padding for smaller current page indicator */
+        margin: 0 4px;
+        background-color: #f2f2f2;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px; /* Adjusted font size */
+    }
+
+    body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-image: url('/static/bggng.png');
+        margin: 0;
+        padding: 0;
+
+        background-repeat: no-repeat;
+        background-size: cover;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+
+    form {
+        width: 50%;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    th,
+    td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+        background-color: #fff;
+        color: #060505;
+    }
+
+    tr:hover {
+        background-color: rgba(34, 31, 70, 0.108);
+    }
+
+    a {
+        text-decoration: none;
+        color: #3498db;
+        transition: color 0.3s;
+        font-weight: bold;
+    }
+
+    a:hover {
+        color: #2980b9;
+    }
+
+    /* Responsive styles */
+    @media only screen and (max-width: 600px) {
+        table {
+            width: 100%;
+        }
+
+        th,
+        td {
+            display: block;
+            width: 100%;
+        }
+    }
+</style>

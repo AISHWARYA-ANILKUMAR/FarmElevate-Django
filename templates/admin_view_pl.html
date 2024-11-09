@@ -1,0 +1,129 @@
+{% include 'farmer_header.html' %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin_home">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="container my-4">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Type</th>
+                        <th>Payee</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in q %}
+                    <tr>
+                        <td>{{row.type}}</td>
+                        <td>{{row.payee}}</td>
+                        <td>{{row.category}}</td>
+                        <td>{{row.amount}}</td>
+                        <td>{{row.date}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="form-container">
+            <table class="table table-bordered">
+                <tr>
+                    <td align="center">Income: {{tot_in}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Type</th>
+                        <th>Payee</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in ex %}
+                    <tr>
+                        <td>{{row.type}}</td>
+                        <td>{{row.payee}}</td>
+                        <td>{{row.category}}</td>
+                        <td>{{row.amount}}</td>
+                        <td>{{row.date}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="form-container">
+            <table class="table table-bordered">
+                <tr>
+                    <td align="center">Expense: {{tot_ex}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="form-container">
+            <table class="table table-bordered">
+                <tr>
+                    <td align="center">Net Amount: {{net_amount}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <style>
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .form-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background: #36545d;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+
+</main>

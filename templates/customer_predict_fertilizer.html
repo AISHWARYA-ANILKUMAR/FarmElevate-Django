@@ -1,0 +1,147 @@
+{% include 'farmer_header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Fertilizer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            margin-top: 40px;
+            color: #333;
+            margin-left:200px;
+        }
+        form {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 600px;
+            margin-left:360px;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+      
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="text-center">
+        <h1>Predict Fertilizer</h1>
+    </div>
+    <form method="post" class="needs-validation" novalidate>
+        <div class="form-group">
+            {% if out %}
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">Predicted Fertilizer Is <i>{{ out }}</i></h4>
+                </div>
+            {% else %}
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="Crop_type">Soil</label>
+                        <select class="form-control" id="Crop_type" name="Crop_type" required>
+                            <option value="">------ Select Soil Type ------</option>
+                            <option value="1">Sandy</option>
+                            <option value="2">Loamy</option>
+                            <option value="3">Black</option>
+                            <option value="4">Red</option>
+                            <option value="5">Clayey</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="Soil_type">Crop</label>
+                        <select class="form-control" id="Soil_type" name="Soil_type" required>
+                            <option value="">------ Select Crop Type ------</option>
+                            <option value="1">Maize</option>
+                            <option value="2">Sugarcane</option>
+                            <option value="3">Cotton</option>
+                            <option value="4">Tobacco</option>
+                            <option value="5">Paddy</option>
+                            <option value="6">Barley</option>
+                            <option value="7">Wheat</option>
+                            <option value="8">Millets</option>
+                            <option value="9">Oil seeds</option>
+                            <option value="10">Pulses</option>
+                            <option value="11">Groundnuts</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="Temperature">Temperature (°C)</label>
+                        <input type="text" class="form-control" id="Temperature" name="Temperature" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="Humidity">Humidity (%)</label>
+                        <input type="text" class="form-control" id="Humidity" name="Humidity" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="Moisture">Moisture (%)</label>
+                        <input type="number" class="form-control" id="Moisture" name="Moisture" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="Nitrogen">Nitrogen (kg/ha)</label>
+                        <input type="text" class="form-control" id="Nitrogen" name="Nitrogen" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="Potassium">Potassium (kg/ha)</label>
+                        <input type="text" class="form-control" id="Potassium" name="Potassium" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="Phosphorus">Phosphorus (kg/ha)</label>
+                        <input type="text" class="form-control" id="Phosphorus" name="Phosphorus" required>
+                    </div>
+                </div>
+                <div class="form-group text-center">
+                    <button class="btn btn-primary btn-lg" type="submit">Predict</button>
+                </div>
+            {% endif %}
+        </div>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Bootstrap validation script
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+</body>
+</html>

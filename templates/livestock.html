@@ -1,0 +1,259 @@
+
+{%include 'farmer_header.html'%}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"></td>
+
+<main id="main" class="main"></td>
+
+    <div class="pagetitle"></td>
+      <h1></td>Dashboard</h1></td>
+      <nav></td>
+        <ol class="breadcrumb"></td>
+          <li class="breadcrumb-item"></td><a href="/admin_home"></td>Home</a></td></li></td>
+          <li class="breadcrumb-item active"></td>Dashboard</li></td>
+        </ol></td>
+      </nav></td>
+    </tr></td>
+
+  <center></td>
+    <section class="section dashboard"></td>
+{% if qa %}
+<form method="post" enctype="multipart/form-data">
+        <table  align="center" class="table table-bordered">
+            <tr>
+                <th for="Internal Id"></td>Internal Id:</th>
+                <td><input type="text" class="form-control" id="animal" value="{{qa.internal_id}}" name="intid" required></td>
+            </tr>
+            <tr>
+                <th for="animal"></td>Animal:</th>
+                <td><input type="text" class="form-control" id="animal" value="{{qa.animal}}" name="animal" required></td>
+            </tr>
+            <tr>
+                <th for="type"></td>Type:</th>
+                <td><input type="text" class="form-control" id="type" name="type" value="{{qa.type}}" required></td>
+            </tr>
+            <tr>
+                <th for="breed"></td>Breed:</th>
+                <td><input type="text" class="form-control" id="breed" name="breed" value="{{qa.breed}}" required></td>
+            </tr>
+            <tr>
+                <th for="gender"></td>Gender:</th>
+                <td><select class="form-control" id="gender" name="gender" required>
+                    <option value="{{qa.gender}}">{{qa.gender}}</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select></td>
+            </tr>
+            <tr>
+                <th for="dob"></td>Date of Birth:</th>
+                <td><input type="date" readonly class="form-control" id="dob" name="dob" value="{{qa.dob}}" required></td>
+            </tr>
+            <tr>
+                <th for="status"></td>Status:</th>
+                <td> <select name="status" class="form-control" required>
+                    <option value="" disabled selected>Select Status</option>
+        
+                        <option value="Alive">Alive</option>
+                        <option value="Sold">Sold</option>
+                        <option value="Deseased">Deseased</option>
+                       
+        
+                </select></td>
+                <!-- <td><input type="text" class="form-control" id="status" name="status" required></td> -->
+            </tr>
+            <tr>
+                <th for="weight"></td>Weight:</th>
+                <td><input type="number" step="0.01" class="form-control" id="weight" name="weight" value="{{qa.weight}}" required></td>
+            </tr></td>
+            <tr></td>
+                <th for="breeding_status"></td>Breeding Status:</th></td>
+                <td><select name="breeding_status" class="form-control" required>
+                    <option value="" disabled selected>Select Status</option>
+        
+                        <option value="Not Breeding">Not Breeding</option>
+                        <option value="Exposed">Exposed</option>
+                        <option value="Pregnant">Pregnant</option>
+                        <option value="Lactacting">Lactacting</option>
+                       
+        
+                </select></td>
+                <!-- <td><input type="text" class="form-control" id="breeding_status" name="breeding_status" required></td> -->
+                <th for="image">Image:</th>
+                <td><input type="file" class="form-control-file" id="image" name="image" accept="image/*"></td>
+            </tr>
+            <tr>
+                <th for="documents">Documents:</th>
+                <td><input type="file" class="form-control-file" id="documents" name="documents" accept=".pdf,.doc,.docx"></td>
+            </tr>
+            <tr>
+                <td><button type="submit" class="btn btn-primary" name="update" style="align-items: center;">Submit</button></td>
+            </tr>
+        </table>
+        </form>
+        
+
+
+
+{%else%}
+
+
+
+<form  method="post" enctype="multipart/form-data"></td>
+    {% csrf_token %}
+    <table  align="center" class="table table-bordered">
+        <tr>
+            <th for="Internal Id"></td>Internal Id:</th>
+            <td><input type="text" class="form-control" id="intid"  name="intid" required></td>
+        </tr>
+   
+   
+        <tr>
+        <th for="animal"></td>Animal:</th>
+        <td><input type="text" class="form-control" id="animal" name="animal" required></td>
+    </tr>
+    <tr>
+        <th for="type"></td>Type:</th>
+        <td><input type="text" class="form-control" id="type" name="type" required></td>
+    </tr>
+    <tr>
+        <th for="breed"></td>Breed:</th>
+        <td><input type="text" class="form-control" id="breed" name="breed" required></td>
+    </tr>
+    <tr>
+        <th for="gender"></td>Gender:</th>
+        <td><select class="form-control" id="gender" name="gender" required>
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select></td>
+    </tr>
+    <tr>
+        <th for="dob"></td>Date of Birth:</th>
+        <td><input type="date" class="form-control" id="dob" name="dob" max="{{today}}" required></td>
+    </tr>
+    <tr>
+        <th for="status"></td>Status:</th>
+        <td> <select name="status" class="form-control" required>
+            <option value="" disabled selected>Select Status</option>
+
+                <option value="Alive">Alive</option>
+                <option value="Sold">Sold</option>
+                <option value="Deseased">Deseased</option>
+               
+
+        </select></td>
+        <!-- <td><input type="text" class="form-control" id="status" name="status" required></td> -->
+    </tr>
+    <tr>
+        <th for="weight"></td>Weight:</th>
+        <td><input type="number" step="0.01" class="form-control" id="weight" name="weight" required></td>
+    </tr></td>
+    <tr></td>
+        <th for="breeding_status"></td>Breeding Status:</th></td>
+        <td><select name="breeding_status" class="form-control" required>
+            <option value="" disabled selected>Select Status</option>
+
+                <option value="Not Breeding">Not Breeding</option>
+                <option value="Exposed">Exposed</option>
+                <option value="Pregnant">Pregnant</option>
+                <option value="Lactacting">Lactacting</option>
+               
+
+        </select></td>
+        <!-- <td><input type="text" class="form-control" id="breeding_status" name="breeding_status" required></td> -->
+    </tr>
+    <tr>
+        <th for="image"></td>Image:</th>
+        <td><input type="file" class="form-control-file" accept="image/*" id="image" name="image"></td>
+    </tr>
+    <tr>
+        <th for="documents"></td>Documents:</th>
+        <td><input type="file"  class="form-control-file" accept="application/pdf" id="documents" name="documents"></td>
+    
+        </tr>
+    <tr>
+        <td><button type="submit" class="btn btn-primary" style="align-items: center;">Submit</button></td>
+    </tr>
+</table>
+</form>
+{%endif%}
+<table>
+    <thead>
+        <tr>
+            <!-- <th>Internal Id</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Breed</th>
+            <th>Gender</th>
+            <th>DOB</th>
+            <th>Status</th>
+            <th>Weight</th>
+            <th>Breeding Status</th>
+            <th>Image</th>
+            <th>Documents</th> -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for animal in q %}
+        <tr>
+            <td>{{ animal.internal_id }}</td>
+            <td>{{ animal.animal }}</td>
+            <td>{{ animal.type }}</td>
+            <td>{{ animal.breed }}</td>
+            <td>{{ animal.gender }}</td>
+            <td>{{ animal.dob }}</td>
+            <td>{{ animal.status }}</td>
+            <td>{{ animal.weight }}</td>
+            <td>{{ animal.breeding_status }}</td>
+            <td><img src="/static/media/{{ animal.image }}" alt="{{ animal.name }}" width="100"></td>
+            <td><a href="/static/media/{{animal.documents }}" download>Download</a></td>
+            <td><a href="/animal_update/{{animal.id}}" class="btn btn-primary">Update</a></td>
+            <td><a href="/livestock_delete/{{animal.id}}" class="btn btn-danger">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<style>
+    th, td {
+        padding: 10px;
+        border: 1px solid #ccc;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .form-container {
+        text-align: center;
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 80%;
+        background: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+    th {
+        background: #36545d;
+        color: #fff;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    tr:hover {
+        background-color: #ddd;
+    }
+
+            
+
+</style>
+
+</main>
+
+

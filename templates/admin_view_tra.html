@@ -1,0 +1,191 @@
+{% include 'farmer_header.html' %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin_home">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div>
+
+    <center>
+        <section class="section dashboard">
+            <h2>TRANSACTION</h2>
+
+            {% if qa %}
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table align="center" class="table table-bordered">
+                    <tr>
+                        <th>Type :</th>
+                        <td>
+                            <select name="ffff" id="" class="form-control">
+                                <option value="" disabled {% if not qa.type %}selected{% endif %}>{{qa.type}}</option>
+                                <option value="Expense" {% if qa.type == "Expense" %}selected{% endif %}>Expense</option>
+                                <option value="Income" {% if qa.type == "Income" %}selected{% endif %}>Income</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Payee :</th>
+                        <td><input type="text" name="p" class="form-control" value="{{ qa.payee }}" required></td>
+                    </tr>
+                    <tr>
+                        <th>Description :</th>
+                        <td><input type="text" name="c" class="form-control" required value="{{ qa.category }}"></td>
+                    </tr>
+                    <tr>
+                        <th>Amount :</th>
+                        <td><input type="text" name="a" class="form-control" required value="{{ qa.amount }}"></td>
+                    </tr>
+                    <tr>
+                        <th for="b">Upload Bill :</th>
+                        <td><input type="file" class="form-control-file" id="image" name="b"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <input type="submit" name="updatess" value="update" class="btn btn-info">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+            {% else %}
+            <br><br>
+            <table align="center">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Type</th>
+                        <th>Payee</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Upload Bill</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                {% for row in q %}
+                <tbody>
+                    <tr>
+                        <td>{{ row.row_number }}</td>
+                        <td>{{ row.type }}</td>
+                        <td>{{ row.payee }}</td>
+                        <td>{{ row.category }}</td>
+                        <td>{{ row.amount }}</td>
+                        <td>{{ row.date }}</td>
+                        <td><a download="" href="/static/media/{{ row.bill }}">Download</a></td>
+                        <td><a href="/tranction_update/{{ row.id }}" class="btn btn-primary">Update</a></td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+
+            <div class="pagination">
+                <span class="step-links">
+                    {% if q.has_previous %}
+                    <a href="?page={{ q.previous_page_number }}" class="btn">&laquo; Previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ q.number }} of {{ q.paginator.num_pages }}.
+                    </span>
+
+                    {% if q.has_next %}
+                    <a href="?page={{ q.next_page_number }}" class="btn">Next &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+            {% endif %}
+        </section>
+    </center>
+
+    <style>
+        .btn {
+            padding: 3px 10px;
+            font-size: 14px;
+        }
+
+        .pagination {
+            margin: 20px 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .pagination .step-links a {
+            display: inline-block;
+            padding: 6px 12px;
+            margin: 0 4px;
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .pagination .step-links a:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .pagination .step-links .current {
+            display: inline-block;
+            padding: 6px 12px;
+            margin: 0 4px;
+            background-color: #f2f2f2;
+            color: #333;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .form-container {
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+
+</main>

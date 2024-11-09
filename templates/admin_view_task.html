@@ -1,0 +1,317 @@
+{%include 'farmer_header.html'%}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/farmer_home">Home</a></li>
+          <li class="breadcrumb-item active">Tasks</li>
+        </ol>
+      </nav>
+    </div>
+
+  <center>
+    <section class="section dashboard">
+      <h2>Task</h2>
+
+<form action="" method="post">
+      <table class="table" style="width: 1100px;">
+        <tr>
+            <td><input type="text" name="sname" id="" placeholder="search here" class="form-control"></td>
+            <td><input type="date" name="start_date" id="" placeholder="search here" class="form-control"></td>
+            <td><input type="date" name="end_date" value="" id="" placeholder="search here" class="form-control"></td>
+            <td>
+                <input type="submit" name="search" value="SEARCH" id="" class="btn btn-info">
+            </td>
+        </tr>
+    </table>
+
+</form>
+      {%if qa%}
+
+<form action="" method="post" enctype="multipart/form-data">
+    <table  align="center" class="table-bordered">
+        <tr>
+            <th>Task Name : </th>
+            <td><input type="text" name="name" value="{{ qa.task_name }}" class="form form-control" required></td>
+        </tr>
+        <tr>
+            <th>Description: </th>
+            <td><textarea name="desc" id=""  cols="80" rows="10" required>{{ qa.description }}</textarea></td>
+        </tr>
+        <tr>
+            <th>Assigned Worker : </th>
+            <td>
+                <select name="worker" class="form-control" required>
+                    <option value="" disabled selected>Select Worker</option>
+                    {% for worker in w %}
+                        <option value="{{ worker.id }}">{{ worker.first_name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Due Date : </th>
+            <td><input type="date" name="edate" value="{{ qa.due_date }}" min="{{ today }}" class="form form-control" required></td>
+        </tr>
+        <tr>
+            <th>Priority :</th>
+            <td>
+                <select name="priority" class="form form-control" required>
+                    <option value="High" style="color: red;" {% if qa.Priority == 'red' %}selected{% endif %}>High</option>
+                    <option value="Low" style="color: rgb(102, 99, 89);" {% if qa.Priority == 'grey' %}selected{% endif %}>Medium</option>
+                    <option value="Medium" style="color: orange;" {% if qa.Priority == 'orange' %}selected{% endif %}>Low</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><input type="submit" name="update" va
+                lue="Update" class="btn btn-primary"></td>
+        </tr>
+    </table>
+    
+</form>
+
+
+{%else%}
+<br>
+<br>
+
+
+<table align="center">
+    <thead>
+    <tr>
+        <th>#ID</th>
+        <th>Task Name</th>
+        <th>Description</th>
+        <th>Priority</th>
+        <th>Due Date</th>
+        <th>Assigned Worker</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
+</thead>
+    {% for row in q %}
+    <tbody>
+    <tr>
+        <td>{{row.row_number}}</td>
+        <td>{{row.task_name}}</td>
+        <td>{{row.description}}</td>
+        <td style="color: {% if row.Priority == 'High' %}red{% elif row.Priority == 'Low' %}grey{% elif row.Priority == 'Medium' %}orange{% endif %};">
+            {{ row.Priority|title }}
+        </td>
+        <td>{{row.due_date}}</td>
+        <td>{{row.assigned_worker.first_name}}</td>
+        {% if row.status != "completed" %}
+        <td><a href="/task_update/{{row.id}}" class="btn btn-primary">Update</a></td>
+        {%else%}
+        <td>{{row.status}}</td>
+        {%endif%}
+
+        <td><a href="/task_delete/{{row.id}}" class="btn btn-danger btn-sm"title="Delete" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fas fa-trash-alt"></i> Delete</a>
+    </tr>
+</tbody>
+
+    {%endfor%}
+</table>
+{%endif%}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if q.has_previous %}
+        <a href="?page={{q.previous_page_number}}" class="btn">&laquo; Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{q.number}} of {{q.paginator.num_pages}}.
+        </span>
+
+        {% if q.has_next %}
+        <a href="?page={{q.next_page_number}}" class="btn">Next &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+  
+          </div>
+        </section>
+       
+      </center>
+
+<style>
+
+    .btn {
+        padding: 3px 10px; /* Adjust padding to control button size */
+        font-size: 14px; /* Adjust font size */
+    }
+            
+            
+ .pagination {
+        margin: 20px 0;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    .pagination .step-links a {
+        display: inline-block;
+        padding: 6px 12px; /* Adjusted padding for smaller buttons */
+        margin: 0 4px;
+        background-color: #007bff; /* Light blue background */
+        border: 1px solid #007bff; /* Light blue border */
+        text-decoration: none;
+        color: #fff;
+        border-radius: 4px;
+        font-size: 14px; /* Adjusted font size */
+    }
+    .pagination .step-links a:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+        border-color: #0056b3;
+    }
+    .pagination .step-links .current {
+        display: inline-block;
+        padding: 6px 12px; /* Adjusted padding for smaller current page indicator */
+        margin: 0 4px;
+        background-color: #f2f2f2;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px; /* Adjusted font size */
+    }
+
+            
+            th, td {
+                padding: 10px;
+                border: 1px solid #ccc;
+                text-align: left;
+            }
+            th {
+                background-color: #fff;
+            }
+            .form-container {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                background: #fff;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+            th, td {
+                padding: 10px;
+                text-align: left;
+            }
+            th {
+                background:  #fff;
+             
+            }
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+          
+
+            
+        </style>
+
+        
+    
+      </main><!-- End #main -->
+
+
+
+
+<script src="
+https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+    </script>
+<script>
+    $(function() {
+        $("input[name='name']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+        $("input[name='lname']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+		$("input[name='hname']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+		$("input[name='street']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+		$("input[name='city']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+		$("input[name='state']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+        // $("input[name='dob']").on('input', function(e) {
+        //     $(this).val($(this).val().replace(/[^0-9/]/g, ''));
+
+        // });
+        
+        $("input[name='phone']").on('input', function(e) {
+    // Get the current value of the input field
+    var inputValue = $(this).val();
+
+    // Remove any non-numeric characters
+    var numericValue = inputValue.replace(/[^0-9]/g, '');
+
+    // Limit the numeric value to 10 characters
+    var truncatedValue = numericValue.substring(0, 10);
+
+    // Set the truncated value back to the input field
+    $(this).val(truncatedValue);
+});
+        $("input[name='pin']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9]/g, ''));
+            
+        });
+        $("input[name='email']").on('input', function(e) {
+              var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{1,}/.test(this.value);
+                if(!re) {
+                    $('#eerror').show();
+                } else {
+                    $('#eerror').hide();
+                }
+
+        });
+        $("input[name='address']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z0-9()/. ]/g, ''));
+
+        });
+        $("input[name='place']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+            
+        $("input[name='pwd']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9A-Za-z@/. ]/g, ''));
+            
+        });
+    });
+
+
+
+   var check = function() {
+  if (document.getElementById('password').value ==
+    document.getElementById('confirm_password').value) {
+    document.getElementById('message').style.color = 'green';
+    document.getElementById('message').innerHTML = 'matching';
+  } else {
+    document.getElementById('message').style.color = 'red';
+    document.getElementById('message').innerHTML = 'not matching';
+  }
+}
+</script>
+
+

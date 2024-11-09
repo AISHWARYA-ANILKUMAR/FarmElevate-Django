@@ -1,0 +1,253 @@
+{%include 'farmer_header.html'%}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/farmer_home">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>CRM</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  </header><!-- End Header -->
+<center>
+    <link rel="stylesheet" href="path/to/bootstrap.css">
+    <script>
+        function validateForm() {
+            const reply = document.forms["replyForm"]["reply"].value;
+            if (reply.trim() === "") {
+                alert("Reply cannot be empty.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+    <h1 style="margin-left: 130px">
+        <span class="blodark" style=";font-weight: bold;font-family: 'Times New Roman', Times, serif;">  </span> <span class="blodark" style="font-weight: bold;font-family: 'Times New Roman', Times, serif;">VIEW COMPLAINTS </span>
+    </h1>
+    {%if ob%}
+    <form name="replyForm" action="" method="post" onsubmit="return validateForm()">
+        <table class="table table-bordered" >
+            <tr>
+                <th>Reply</th>
+                <td><textarea name="reply" id="" class="form-control" required></textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" name="submit" class="btn btn-success"></td>
+            </tr>
+        </table>
+    </form>
+    {%else%}
+
+    
+    
+    <table align="center" style="color: black;" class="table table-bordered">
+        <thead>
+            <tr><th>#ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Position</th>
+                <th>Contact</th>
+                   <th>Complaint</th>
+                   <th>Date</th>
+                   <th>Reply</th>
+               </tr>
+            </thead>
+            <tbody>
+               {% for row in obj %}
+               <tr>
+              <td>{{row.row_number}}</td>
+              <td>{{row.worker.first_name}}</td>
+                   <td>{{ row.department}}</td>
+                   <td>{{ row.position }}</td>
+                   <td>{{ row.worker.phone }}</td>
+                   <td>{{ row.complaint_text}}</td>
+                   <td>{{ row.date}}</td>
+                </td>
+                
+         {% if row.reply == 'pending' %}
+                    <td><a href="/send_reply/{{ row.id }}" class="btn btn-primary">REPLY</a></td>
+                {%else%}
+                <td>{{ row.reply}}</td>
+                {% endif %}
+               </tr>
+               {% endfor %}
+            </tbody>
+         
+                   
+        </table>
+
+
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if obj.has_previous %}
+                <a href="?page={{obj.previous_page_number}}" class="btn">&laquo; Previous</a>
+                {% endif %}
+        
+                <span class="current">
+                    Page {{obj.number}} of {{obj.paginator.num_pages}}.
+                </span>
+        
+                {% if obj.has_next %}
+                <a href="?page={{obj.next_page_number}}" class="btn">Next &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
+            <!-- <tr>
+                <th>SL.NO</th>
+                <th>Client Name</th>
+                <th>Complaint</th>
+                <th>Reply</th>
+                <th>Date</th>
+                <TH></TH>
+            </tr>
+        </thead> -->
+        <!-- <tbody>
+            {% for i in obj %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.user.first_name }} {{ i.user.last_name }}</td>
+                <td>{{ i.complaint_text }}</td>
+                <td>{{ i.reply }}</td>
+                <td>{{ i.date }}</td>
+                </td>
+                
+                    {% if i.reply == 'pending' %}
+                        <td><a href="/send_reply/{{ i.id }}" class="btn btn-danger">REPLY</a></td>
+                    {% endif %}
+            
+            </tr> -->
+            <!-- {% endfor %}
+        </tbody> -->
+
+    </table>
+    {%endif%}
+
+    
+    <br><br><br><br><br>
+</center>
+<style>
+
+    .btn {
+        padding: 3px 10px; /* Adjust padding to control button size */
+        font-size: 14px; /* Adjust font size */
+    }
+            
+            
+ .pagination {
+        margin: 20px 0;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    .pagination .step-links a {
+        display: inline-block;
+        padding: 6px 12px; /* Adjusted padding for smaller buttons */
+        margin: 0 4px;
+        background-color: #007bff; /* Light blue background */
+        border: 1px solid #007bff; /* Light blue border */
+        text-decoration: none;
+        color: #fff;
+        border-radius: 4px;
+        font-size: 14px; /* Adjusted font size */
+    }
+    .pagination .step-links a:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+        border-color: #0056b3;
+    }
+    .pagination .step-links .current {
+        display: inline-block;
+        padding: 6px 12px; /* Adjusted padding for smaller current page indicator */
+        margin: 0 4px;
+        background-color: #f2f2f2;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px; /* Adjusted font size */
+    }
+
+    body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-image: url('/static/bggng.png');
+        margin: 0;
+        padding: 0;
+
+        background-repeat: no-repeat;
+        background-size: cover;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+
+    form {
+        width: 50%;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    th,
+    td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+        background-color: #fff;
+        color: #060505;
+    }
+
+    tr:hover {
+        background-color: rgba(34, 31, 70, 0.108);
+    }
+
+    a {
+        text-decoration: none;
+        color: #3498db;
+        transition: color 0.3s;
+        font-weight: bold;
+    }
+
+    a:hover {
+        color: #2980b9;
+    }
+
+    /* Responsive styles */
+    @media only screen and (max-width: 600px) {
+        table {
+            width: 100%;
+        }
+
+        th,
+        td {
+            display: block;
+            width: 100%;
+        }
+    }
+</style>

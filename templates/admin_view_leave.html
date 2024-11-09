@@ -1,0 +1,138 @@
+{% include 'farmer_header.html' %}
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin_home">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+
+    <form action="" method="post">
+        <table class="table">
+            <tr>
+                <td><input type="text" name="sname" id="" placeholder="Search here" class="form-control"></td>
+              
+                <td>
+                    <input type="submit" name="search" value="SEARCH" id="" class="btn btn-info">
+                </td>
+            </tr>
+        </table>
+    
+    
+    </form>
+
+
+    <section class="section dashboard">
+        <div class="container">
+            
+                <table class="">
+                    <thead >
+                        <tr>
+                            <th>Sl. No.</th>
+                            <th>Reason</th>
+                            <th>Date</th>
+                            <th>Worker</th>
+                            <th>Actions</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for obj in obj %}
+<tr>
+    <td>{{ obj.row_number }}</td>
+    <td>{{ obj.Reason }}</td>
+    <td>{{ obj.date }}</td>
+    <td>{{ obj.worker.first_name }} {{ obj.worker.last_name }}</td>
+        {% if obj.status == 'pending' %}
+        <td>
+            <a href="/l_accept/{{ obj.id }}" class="btn btn-primary">Accept</a>
+            <a href="/l_reject/{{ obj.id }}" class="btn btn-danger">Reject</a>
+        {% comment %} {% elif obj.status == 'Accepted' %}
+            Accepted
+        {% elif obj.status == 'Rejected' %}
+            Rejected {% endcomment %}
+        </td>
+
+
+        {% else %}
+        <td>{{ obj.status }}</td>
+
+
+        {% endif %}
+</tr>
+{% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+<div class="pagination">
+    <span class="step-links">
+        {% if obj.has_previous %}
+        <a href="?page={{obj.previous_page_number}}" class="btn">&laquo; Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{obj.number}} of {{obj.paginator.num_pages}}.
+        </span>
+
+        {% if obj.has_next %}
+        <a href="?page={{obj.next_page_number}}" class="btn">Next &raquo;</a>
+        {% endif %}
+    </span>
+</div> 
+    </section>
+</main><!-- End #main -->
+
+<style>
+
+    .btn {
+        padding: 3px 10px; /* Adjust padding to control button size */
+        font-size: 14px; /* Adjust font size */
+    }
+            
+            
+ .pagination {
+        margin: 20px 0;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    .pagination .step-links a {
+        display: inline-block;
+        padding: 6px 12px; /* Adjusted padding for smaller buttons */
+        margin: 0 4px;
+        background-color: #007bff; /* Light blue background */
+        border: 1px solid #007bff; /* Light blue border */
+        text-decoration: none;
+        color: #fff;
+        border-radius: 4px;
+        font-size: 14px; /* Adjusted font size */
+    }
+    .pagination .step-links a:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+        border-color: #0056b3;
+    }
+    .pagination .step-links .current {
+        display: inline-block;
+        padding: 6px 12px; /* Adjusted padding for smaller current page indicator */
+        margin: 0 4px;
+        background-color: #f2f2f2;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px; /* Adjusted font size */
+    }
+
+    .pagetitle {
+        margin-bottom: 20px;
+    }
+  
+</style>
+
+{% include 'footer.html' %}

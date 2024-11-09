@@ -1,0 +1,290 @@
+{% include 'farmer_header.html' %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<main id="main" class="main">
+
+    {% comment %} <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin_home">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div> {% endcomment %}
+
+    <center>
+        <section class="section dashboard">
+            <h2>Task</h2>
+
+            {% if qa %}
+            <form action="" method="post" enctype="multipart/form-data">
+                <table align="center">
+                    <tr>
+                        <th>Task Name :</th>
+                        <td><input type="text" name="name" value="{{ qa.task_name }}" class="form-control form-control-sm" required></td>
+                    </tr>
+                    <tr>
+                        <th>Description :</th>
+                        <td><textarea name="desc" cols="80" rows="10" class="form-control form-control-sm" required>{{ qa.description }}</textarea></td>
+                    </tr>
+                    <tr>
+                        <th>Assigned Worker :</th>
+                        <td>
+                            <select name="worker" class="form-control form-control-sm" required>
+                                <option value="" disabled selected>Select Worker</option>
+                                {% for worker in w %}
+                                <option value="{{ worker.id }}">{{ worker.first_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Due Date :</th>
+                        <td><input type="date" name="edate" value="{{ qa.due_date }}" min="{{ today }}" class="form-control form-control-sm" required></td>
+                    </tr>
+                    <tr>
+                        <th>Priority :</th>
+                        <td>
+                            <select name="priority" class="form-control form-control-sm" required>
+                                <option value="High" style="color: red;" {% if qa.Priority == 'red' %}selected{% endif %}>Red (High)</option>
+                                <option value="Low" style="color: rgb(102, 99, 89);" {% if qa.Priority == 'grey' %}selected{% endif %}>Grey (Medium)</option>
+                                <option value="Medium" style="color: orange;" {% if qa.Priority == 'orange' %}selected{% endif %}>Orange (Low)</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center"><input type="submit" name="update" value="Update" class="btn btn-primary"></td>
+                    </tr>
+                </table>
+            </form>
+
+            {% else %}
+            <form action="" method="post" enctype="multipart/form-data">
+                <table align="center" class="table table-bordered">
+                    <tr>
+                        <th>Task Name :</th>
+                        <td><input type="text" name="tname" class="form-control form-control-sm" required></td>
+                    </tr>
+                    <tr>
+                        <th>Description :</th>
+                        <td><textarea name="desc" cols="30" rows="10" class="form-control form-control-sm" required></textarea></td>
+                    </tr>
+                    <tr>
+                        <th>Assigned Worker :</th>
+                        <td>
+                            <select name="worker" class="form-control form-control-sm" required>
+                                <option value="" disabled selected>Select Worker</option>
+                                {% for worker in w %}
+                                <option value="{{ worker.id }}">{{ worker.first_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Due Date :</th>
+                        <td><input type="date" name="ddate" class="form-control form-control-sm" min="{{ today }}" required></td>
+                    </tr>
+                    <tr>
+                        <th>Priority :</th>
+                        <td>
+                            <select name="priority" class="form-control form-control-sm" required>
+                                <option value="" disabled selected>Select Priority</option>
+                                <option value="High" style="color: red;">High</option>
+                                <option value="Medium" style="color: orange;">Medium</option>
+                                <option value="Low" style="color: rgb(84, 84, 65);">Low</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <input type="submit" name="submit" value="Submit" class="btn btn-primary">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+           
+{%endif%}
+<br>
+<br>
+
+
+<table align="center">
+    <thead>
+    <tr>
+        <!-- <th>#</th>
+        <th>Task Name</th>
+        <th>Description</th>
+        <th>Add_Checklists</th>
+        <th>Due Date</th>
+        <th>Assigned Worker</th>
+        <th>Update</th>
+        <th>Delete</th> -->
+    </tr>
+</thead>
+    {% for row in q %}
+    <tbody>
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{row.task_name}}</td>
+        <td>{{row.description}}</td>
+        <td style="color: {% if row.Priority == 'red' %}High{% elif row.Priority == 'grey' %}Low{% elif row.Priority == 'orange' %}Medium{% endif %};">
+            {{ row.Priority|title }}
+        </td>
+        <td>{{row.due_date}}</td>
+        <td>{{row.assigned_worker.first_name}}</td>
+        <td><a href="/task_update/{{row.id}}" class="btn btn-primary">Update</a></td>
+        <td><a href="/task_delete/{{row.id}}" class="btn btn-danger">Delete</a></td>
+    </tr>
+</tbody>
+
+    {%endfor%}
+</table>
+    
+  
+          </div>
+        </section>
+      </center>
+
+        <style>
+            th, td {
+                padding: 10px;
+                border: 1px solid #ccc;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            .form-container {
+                text-align: center;
+            }
+            
+            table {
+                border-collapse: collapse;
+                width: 80%;
+                background: #fff;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+            th, td {
+                padding: 10px;
+                text-align: left;
+            }
+            th {
+                background: #36545d;
+                color: #fff;
+            }
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+            tr:hover {
+                background-color: #ddd;
+            }
+
+
+            .btn {
+            padding: 8px 16px; /* Adjust padding to control button size */
+            font-size: 14px; /* Adjust font size */
+            display: block; /* Make the button a block element */
+            margin: 0 auto; /* Center the button horizontally */
+            }
+
+            
+        </style>
+    
+      </main><!-- End #main -->
+
+
+
+
+<script src="
+https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+    </script>
+<script>
+    $(function() {
+        $("input[name='name']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+        $("input[name='lname']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+		$("input[name='hname']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+		$("input[name='street']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+		$("input[name='city']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+		$("input[name='state']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+        // $("input[name='dob']").on('input', function(e) {
+        //     $(this).val($(this).val().replace(/[^0-9/]/g, ''));
+
+        // });
+        
+        $("input[name='phone']").on('input', function(e) {
+    // Get the current value of the input field
+    var inputValue = $(this).val();
+
+    // Remove any non-numeric characters
+    var numericValue = inputValue.replace(/[^0-9]/g, '');
+
+    // Limit the numeric value to 10 characters
+    var truncatedValue = numericValue.substring(0, 10);
+
+    // Set the truncated value back to the input field
+    $(this).val(truncatedValue);
+});
+        $("input[name='pin']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9]/g, ''));
+            
+        });
+        $("input[name='email']").on('input', function(e) {
+              var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{1,}/.test(this.value);
+                if(!re) {
+                    $('#eerror').show();
+                } else {
+                    $('#eerror').hide();
+                }
+
+        });
+        $("input[name='address']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z0-9()/. ]/g, ''));
+
+        });
+        $("input[name='place']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+            
+        $("input[name='pwd']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9A-Za-z@/. ]/g, ''));
+            
+        });
+    });
+
+
+
+   var check = function() {
+  if (document.getElementById('password').value ==
+    document.getElementById('confirm_password').value) {
+    document.getElementById('message').style.color = 'green';
+    document.getElementById('message').innerHTML = 'matching';
+  } else {
+    document.getElementById('message').style.color = 'red';
+    document.getElementById('message').innerHTML = 'not matching';
+  }
+}
+</script>
+
+

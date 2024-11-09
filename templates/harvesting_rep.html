@@ -1,0 +1,165 @@
+{% include 'farmer_header.html' %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/admin_home">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+
+  <center>
+    <section class="section dashboard">
+      <h2>Harvest</h2>
+
+
+      <form action="" method="post">
+        <table class="table table-bordered">
+            <tr>
+                <td><input type="text" name="sname" id="" placeholder="Search here" class="form-control"></td>
+                <td><input type="date" name="start_date" id="" placeholder="Start Date" class="form-control"></td>
+                <td><input type="date" name="end_date" id="" placeholder="End Date" class="form-control"></td>
+                <td>
+                    <input type="submit" name="search" value="SEARCH" id="" class="btn btn-info">
+                </td>
+                <td><button onclick="window.print()" class="btn btn-primary">Print Report</button>
+                </td>
+            </tr>
+        </table>
+
+
+    </form>
+
+
+
+
+
+      <br>
+
+      
+      
+      <!-- Print button -->
+<br><br>
+      <table align="center">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Plant Name</th>
+            <th>Variety</th>
+            <th>Internal_id</th>
+            <th>Location_type</th>
+            <th>Size</th>
+            <th>Harvesting_date</th>
+            <th>Worker</th>
+            <!-- <th>status</th> -->
+            
+          
+          </tr>
+        </thead>
+        <tbody>
+          {% for obj in obj %}
+          <tr>
+            <td>{{ obj.row_number }}</td>
+        <td>{{obj.name}}</td>
+        <td>{{obj.variety}}</td>
+        <td>{{obj.internal_id}}</td>
+        <td>{{obj.location_type}}</td>
+        <td>{{obj.size}}</td>
+        <td>{{obj.harvesting_date}}</td>
+        <td>{{obj.worker.first_name}} {{obj.worker.last_name}}</td>
+        <!-- <td>{{ obj.status }}</td> -->
+
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <br>
+      <h5>Total Number of Plants Harvested: {{ total_plants }}</h5>
+
+    </section>
+  </center>
+            
+  <div class="pagination">
+    <span class="step-links">
+        {% if obj.has_previous %}
+        <a href="?page={{obj.previous_page_number}}" class="btn">&laquo; Previous</a>
+        {% endif %}
+  
+        <span class="current">
+            Page {{obj.number}} of {{obj.paginator.num_pages}}.
+        </span>
+  
+        {% if obj.has_next %}
+        <a href="?page={{obj.next_page_number}}" class="btn">Next &raquo;</a>
+        {% endif %}
+    </span>
+  </div>
+  
+    </div>
+  </main>
+  
+  <style>
+  
+  
+    .btn {
+        padding: 3px 10px; /* Adjust padding to control button size */
+        font-size: 14px; /* Adjust font size */
+    }
+            
+            
+  .pagination {
+        margin: 20px 0;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    .pagination .step-links a {
+        display: inline-block;
+        padding: 6px 12px; /* Adjusted padding for smaller buttons */
+        margin: 0 4px;
+        background-color: #007bff; /* Light blue background */
+        border: 1px solid #007bff; /* Light blue border */
+        text-decoration: none;
+        color: #fff;
+        border-radius: 4px;
+        font-size: 14px; /* Adjusted font size */
+    }
+    .pagination .step-links a:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+        border-color: #0056b3;
+    }
+    .pagination .step-links .current {
+        display: inline-block;
+        padding: 6px 12px; /* Adjusted padding for smaller current page indicator */
+        margin: 0 4px;
+        background-color: #f2f2f2;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px; /* Adjusted font size */
+    }
+  
+    .btn {
+        padding: 6px 12px; /* Adjust padding for button size */
+        font-size: 14px; /* Adjust font size */
+    }
+    
+    .form-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+  
+    .table-responsive {
+        overflow-x: auto;
+    }
+  
+   
+  </style>
+  

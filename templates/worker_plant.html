@@ -1,0 +1,191 @@
+{% include 'worker_header.html' %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin_home">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div>
+
+    <center>
+        <section class="section dashboard">
+            <h2>Plant</h2>
+
+            <br>
+            <br>
+
+            <div class="form-container">
+                <!-- <form id="search-form" method="GET" action="">
+                    <table class="table">
+                        <tr>
+                   <td><input type="text" name="name" placeholder="Plant Name" value="{{ request.GET.name }}" oninput="this.form.submit()"></td>
+                    <td><input type="text" name="crop_type" placeholder="Crop Type" value="{{ request.GET.crop_type }}" oninput="this.form.submit()"></td>
+                    <td> <input type="text" name="location_type" placeholder="Location Type" value="{{ request.GET.location_type }}" oninput="this.form.submit()"></td>
+                  </tr>
+                  <tr>
+                  <td><input type="text" name="planting_fomate" placeholder="Planting Format" value="{{ request.GET.planting_fomate }}" oninput="this.form.submit()"></td>
+                    <td>  <label for="start_date">Start Date:</label>
+                    <input type="date" id="start_date" name="start_date" value="{{ request.GET.start_date }}" onchange="this.form.submit()">
+                   </td>
+                    <td>  <label for="end_date">End Date:</label>
+                    <input type="date" id="end_date" name="end_date" value="{{ request.GET.end_date }}" onchange="this.form.submit()">
+                </td>
+                </tr>
+            </table>
+                </form> -->
+<form action="" method="post">
+                <table class="table table-bordered">
+                    <tr>
+                        <td><input type="text" name="sname" id="" placeholder="Search here" class="form-control"></td>
+                        <td><input type="date" name="start_date" id="" placeholder="Start Date" class="form-control"></td>
+                        <td><input type="date" name="end_date" id="" placeholder="End Date" class="form-control"></td>
+                        <td>
+                            <input type="submit" name="search" value="SEARCH" id="" class="btn btn-info">
+                        </td>
+                    </tr>
+                </table>
+
+
+            </form>
+
+            </div>
+
+            <br>
+            <br>
+
+            <table align="center">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Plant Name</th>
+                        {% comment %} <th>Crop Type</th> {% endcomment %}
+                        <th>Variety</th>
+                        <th>Internal_id</th>
+                        <th>Location_type</th>
+                        <th>Planting_format</th>
+                        <th>Plant_date</th>
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in obj %}
+                    <td>{{ obj.row_number }}</td>
+                    <td>{{ obj.name }}</td>
+                        {% comment %} <td>{{ obj.Crop1.type }}</td> {% endcomment %}
+                        <td>{{ obj.variety }}</td>
+                        <td>{{ obj.internal_id }}</td>
+                        <td>{{ obj.location_type }}</td>
+                        <td>{{ obj.planting_fomate }}</td>
+                        <td>{{ obj.Plant_date }}</td>
+                        {% if obj.status == 'pending' %}
+                        <td><a href="/planted/{{ obj.id }}" class="btn btn-primary">Completed</a></td>
+                        {% else %}
+                        <td>{{ obj.status }}</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </center>
+    <div class="pagination">
+        <span class="step-links">
+            {% if obj.has_previous %}
+            <a href="?page={{obj.previous_page_number}}" class="btn">&laquo; Previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{obj.number}} of {{obj.paginator.num_pages}}.
+            </span>
+    
+            {% if obj.has_next %}
+            <a href="?page={{obj.next_page_number}}" class="btn">Next &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    
+              </div>
+
+
+    <style>
+
+
+.btn {
+        padding: 3px 10px; /* Adjust padding to control button size */
+        font-size: 14px; /* Adjust font size */
+    }
+            
+            
+ .pagination {
+        margin: 20px 0;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    .pagination .step-links a {
+        display: inline-block;
+        padding: 6px 12px; /* Adjusted padding for smaller buttons */
+        margin: 0 4px;
+        background-color: #007bff; /* Light blue background */
+        border: 1px solid #007bff; /* Light blue border */
+        text-decoration: none;
+        color: #fff;
+        border-radius: 4px;
+        font-size: 14px; /* Adjusted font size */
+    }
+    .pagination .step-links a:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+        border-color: #0056b3;
+    }
+    .pagination .step-links .current {
+        display: inline-block;
+        padding: 6px 12px; /* Adjusted padding for smaller current page indicator */
+        margin: 0 4px;
+        background-color: #f2f2f2;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px; /* Adjusted font size */
+    }
+
+   
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .form-container {
+            text-align: center;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th {
+            background: white;
+            color: black;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .form-container input {
+            margin: 5px;
+        }
+    </style>
+</main>

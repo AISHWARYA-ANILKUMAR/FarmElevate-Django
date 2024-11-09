@@ -1,0 +1,133 @@
+
+{%include 'farmer_header.html'%}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"></td>
+
+<main id="main" class="main"></td>
+
+    <div class="pagetitle"></td>
+      <h1></td>Dashboard</h1></td>
+      <nav></td>
+        <ol class="breadcrumb"></td>
+          <li class="breadcrumb-item"></td><a href="/admin_home"></td>Home</a></td></li></td>
+          <li class="breadcrumb-item active"></td>Dashboard</li></td>
+        </ol></td>
+      </nav></td>
+    </tr></td>
+
+
+
+<form action="" method="post">
+    {%csrf_token%}
+<table class="table" style="width: 1100px;">
+    <tr>
+        <td><input type="text" name="sname" id="" placeholder="search here" class="form-control"></td>
+        <td><input type="date" name="start_date" id="" placeholder="search here" class="form-control"></td>
+        <td><input type="date" name="end_date" value="" id="" placeholder="search here" class="form-control"></td>
+        <td>
+            <input type="submit" name="search" value="SEARCH" id="" class="btn btn-info">
+        </td>
+        <td>    <button onclick="window.print()" class="btn btn-secondary">Print</button>
+        </td>
+    </tr>
+</table>
+</form>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>#id</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>last service</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in q %}
+        <tr>
+            <td>{{row.row_number}}</td>
+            <td>{{row.name}}</td>
+            <td>{{row.type}}</td>
+            <td>{{row.brand}}</td>
+            <td>{{row.model}}</td>
+            <td>{{row.ls}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+<br>
+<h3><center>Total Inventory Items: {{ live }}<center></h3>
+
+
+   
+   
+<div class="pagination">
+    <span class="step-links">
+        {% if q.has_previous %}
+        <a href="?page={{q.previous_page_number}}" class="btn">&laquo; Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{q.number}} of {{q.paginator.num_pages}}.
+        </span>
+
+        {% if q.has_next %}
+        <a href="?page={{q.next_page_number}}" class="btn">Next &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+          </div>
+        </section>
+      </center>
+
+      
+    <style>
+
+        .btn {
+            padding: 3px 10px; /* Adjust padding to control button size */
+            font-size: 14px; /* Adjust font size */
+        }
+                
+                
+     .pagination {
+            margin: 20px 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+        .pagination .step-links a {
+            display: inline-block;
+            padding: 6px 12px; /* Adjusted padding for smaller buttons */
+            margin: 0 4px;
+            background-color: #007bff; /* Light blue background */
+            border: 1px solid #007bff; /* Light blue border */
+            text-decoration: none;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 14px; /* Adjusted font size */
+        }
+        .pagination .step-links a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            border-color: #0056b3;
+        }
+        .pagination .step-links .current {
+            display: inline-block;
+            padding: 6px 12px; /* Adjusted padding for smaller current page indicator */
+            margin: 0 4px;
+            background-color: #f2f2f2;
+            color: #333;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px; /* Adjusted font size */
+        }
+    
+
+
+
+
+    
+    </style>

@@ -1,0 +1,138 @@
+{% include 'farmer_header.html' %}
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin_home">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <center>
+        <section class="section dashboard">
+            <div class="form-container" >
+                <table class="table">
+                    
+                <input type="text" id="searchTaskName" class="form-control" placeholder="Search by Task Name" onkeyup="searchTasks()">
+                <input type="date" id="searchFromDate" placeholder="From Date" onchange="searchTasks()">
+                <input type="date" id="searchToDate" placeholder="To Date" onchange="searchTasks()">
+                <input type="text" id="searchWorker" placeholder="Search by Worker" onkeyup="searchTasks()">
+                <input type="text" id="searchStatus" placeholder="Search by Status" onkeyup="searchTasks()">
+                <button onclick="window.print()" class="btn btn-secondary">Print</button>
+            </table>
+
+            </div>
+            
+            <table align="center" class="table table-bordered" id="tasksTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Task Name</th>
+                        <th>Description</th>
+                        <th>Priority</th>
+                        <th>Due Date</th>
+                        <th>Assigned Worker</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in q %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ row.task_name }}</td>
+                        <td>{{ row.description }}</td>
+                        <td style="color: {% if row.Priority == 'red' %}red{% elif row.Priority == 'orange' %}orange{% elif row.Priority == 'grey' %}grey{% endif %};">
+                            {{ row.Priority|title }}
+                        </td>
+                        <!-- <td>{{ row.due_date|date:'m/d/Y' }}</td> -->
+                        <td>{{ row.due_date}}</td>
+                        <td>{{ row.assigned_worker.first_name }}</td>
+                        <td>{{ row.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </center>
+
+    <style>
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .form-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background: #36545d;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+
+    <script>
+        function searchTasks() {
+            // Get the input values
+            var taskNameInput = document.getElementById('searchTaskName').value.toLowerCase();
+            var fromDateInput = document.getElementById('searchFromDate').value;
+            var toDateInput = document.getElementById('searchToDate').value;
+            var workerInput = document.getElementById('searchWorker').value.toLowerCase();
+            var statusInput = document.getElementById('searchStatus').value.toLowerCase();
+
+            // Get the table and rows
+            var table = document.getElementById('tasksTable');
+            var tr = table.getElementsByTagName('tr');
+
+            // Loop through all table rows, and hide those that don't match the search query
+            for (var i = 1; i < tr.length; i++) {
+                var taskName = tr[i].getElementsByTagName('td')[1].innerText.toLowerCase();
+                var dueDate = tr[i].getElementsByTagName('td')[4].innerText;
+                var worker = tr[i].getElementsByTagName('td')[5].innerText.toLowerCase();
+                var status = tr[i].getElementsByTagName('td')[6].innerText.toLowerCase();
+
+                // Convert table due date to a comparable format (YYYY-MM-DD)
+                var formattedDueDate = new Date(dueDate);
+                alert(formattedDueDate);
+
+                // Check if the due date is within the range
+                var isDateInRange = (!fromDateInput || formattedDueDate >= new Date(fromDateInput)) &&
+                                    (!toDateInput || formattedDueDate <= new Date(toDateInput));
+
+                if (
+                    (taskName.indexOf(taskNameInput) > -1 || !taskNameInput) &&
+                    isDateInRange &&
+                    (worker.indexOf(workerInput) > -1 || !workerInput) &&
+                    (status.indexOf(statusInput) > -1 || !statusInput)
+                ) {
+                    tr[i].style.display = '';
+                } else {
+                    tr[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
+</main><!-- End #main -->

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!--======== CSS ========-->
+    <link rel="stylesheet" href="/static/style.css">
+     
+    <!--===== Iconscout CSS =====-->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <title>Responsive Registration Form</title> 
+</head>
+<body>
+    <div class="container"  >
+        <header>Worker Registration</header>
+    
+        <form method="post" style="height: 550px !important;">
+            {% csrf_token %}
+            <div class="form first" style="height: 500px !important;">
+                <div class="details personal">
+                    <span class="title">Personal Details</span>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>First Name</label>
+                            <input type="text" id="form_fname" name="first_name" placeholder="Enter your first name" required>
+                            <span class="error_form" id="fname_error_message" style="color:red; font-size:13px;"></span>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Last Name</label>
+                            <input type="text" id="form_sname" name="last_name" placeholder="Enter your last name" required>
+                            <span class="error_form" id="sname_error_message" style="color:red; font-size:13px;"></span>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Date of Birth</label>
+                            <input type="date" id="form_dob" max="{{today}}" name="dob" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Gender</label>
+                            <select name="gender" id="gender" required>
+                                <option disabled selected>Select gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Phone</label>
+                            <input type="text" id="form_phone" pattern="[0-9]{10}" name="phone" placeholder="Enter phone number" required>
+                            <span class="error_form" id="phone_error_message" style="color:red; font-size:13px;"></span>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Email</label>
+                            <input type="email" id="form_email" name="email" placeholder="Enter your email" required>
+                            <span class="error_form" id="email_error_message" style="color:red; font-size:13px;"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details ID" >
+                    <span class="title">Identity Details</span>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>Address</label>
+                            <input type="text" id="form_address" name="address" placeholder="Enter your address" required>
+                            <span class="error_form" id="address_error_message" style="color:red; font-size:13px;"></span>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Country</label>
+                            <input type="text" id="form_country" name="country" placeholder="Enter your country" required>
+                            <span class="error_form" id="country_error_message" style="color:red; font-size:13px;"></span>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Department</label>
+                            <input type="text" id="department" name="department" placeholder="Enter your department" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Position</label>
+                            <input type="text" id="position" name="position" placeholder="Enter your position" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Employee ID</label>
+                            <input type="text" id="employee_id" name="employee_id" placeholder="Enter your employee ID" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Username</label>
+                            <input type="text" name="uname" id="uname" placeholder="Enter your username" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Password</label>
+                            <input type="password" name="pwd" id="pwd" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" placeholder="Enter your password" required>
+                        </div>
+
+                        <button class="submit">
+                            <span class="btnText">Submit</span>
+                            <i class="uil uil-navigator"></i>
+                        </button>
+                        <br><br><br><br>
+                    </div>
+                </div>
+            </div>
+           
+
+        </form>
+    </div>
+    <br><br><br><br>
+    <br><br><br><br>
+    <br><br><br><br>
+
+    <script src="/static/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="/static/validation.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+    <script src="js2/bootstrap.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    <script>
+        $(function() {
+            $("input[name='first_name']").on('input', function(e) {
+                $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+            });
+            $("input[name='last_name']").on('input', function(e) {
+                $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+            });
+            $("input[name='phone']").on('input', function(e) {
+                $(this).val($(this).val().replace(/[^0-9]/g, ''));
+            });
+            $("input[name='email']").on('input', function(e) {
+                var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{1,}/.test(this.value);
+                if (!re) {
+                    $('#eerror').show();
+                } else {
+                    $('#eerror').hide();
+                }
+            });
+            $("input[name='address']").on('input', function(e) {
+                $(this).val($(this).val().replace(/[^A-Za-z0-9()/. ]/g, ''));
+            });
+            $("input[name='country']").on('input', function(e) {
+                $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+            });
+        });
+
+        var check = function() {
+            if (document.getElementById('pwd').value == document.getElementById('confirm_password').value) {
+                document.getElementById('message').style.color = 'green';
+                document.getElementById('message').innerHTML = 'matching';
+            } else {
+                document.getElementById('message').style.color = 'red';
+                document.getElementById('message').innerHTML = 'not matching';
+            }
+        }
+    </script>  
+</body>
+</html>

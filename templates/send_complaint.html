@@ -1,0 +1,206 @@
+{% include 'worker_header.html' %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/farmer_home">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+<center>
+    <h1 style="margin-left: 130px">
+        <span class="blodark" style="color: #ec2c36" style="font-weight: bold;" style="font-weight: bold;"> Send </span> <span class="blodark" style="font-weight: bold;"> Complaint </span>
+    </h1>
+
+    <table class="styled-table" border="2" style="width:1200px">
+       
+
+
+               
+                                        <form method="post" enctype="multipart/form-data">
+                                            <table class="table table-bordered" style="width: 1000px;">
+                                              
+                                                {% if w %}
+                                                <tr>
+                                                    <th>Department</th>
+                                                    <td><input type="text" required class="form-control" value="{{w.department}}" style="height: 40px;" name="dept" pattern="[A-Za-z0-9\s,.!?]+" title="Description should contain only alphanumeric characters, spaces, and punctuation"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Position</th>
+                                                    <td><input type="text" required class="form-control" value="{{w.position}}" style="height: 40px;" name="posi" pattern="[A-Za-z0-9\s,.!?]+" title="Description should contain only alphanumeric characters, spaces, and punctuation"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>employee_id</th>
+                                                    <td><input type="text" required class="form-control" value="{{w.emp_id}}" style="height: 40px;" name="con" pattern="[A-Za-z0-9\s,.!?]+" title="Description should contain only alphanumeric characters, spaces, and punctuation"></td>
+                                                </tr>
+                                                {%endif%}
+                                                <tr>
+                                                    <th>Complaint</th>
+                                                    <td><textarea name="com" id="" required class="form-control" style="height: 40px;" pattern="[A-Za-z0-9\s,.!?]+" title="Description should contain only alphanumeric characters, spaces, and punctuation" cols="50" rows="10"></textarea></td>
+
+                                                    <!-- <td><input type="text" required class="form-control" style="height: 40px;" name="com" pattern="[A-Za-z0-9\s,.!?]+" title="Description should contain only alphanumeric characters, spaces, and punctuation"></td> -->
+                                                </tr>
+                                                <tr>
+                                                    <th>Resolution Expectation</th>
+                                                    <td><textarea name="re" id="" required class="form-control" style="height: 40px;" pattern="[A-Za-z0-9\s,.!?]+" title="Description should contain only alphanumeric characters, spaces, and punctuation" cols="30" rows="5"></textarea></td>
+
+                                                    <!-- <td><input type="text" required class="form-control" style="height: 40px;" name="com" pattern="[A-Za-z0-9\s,.!?]+" title="Description should contain only alphanumeric characters, spaces, and punctuation"></td> -->
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" align="center"><input type="submit" class="btn btn-success" name="noti" value="SEND"></td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                                        <!-- <img src="/static/images/pngwing.com(46).png" class="img-fluid" alt="Sample image" style="width: 400px; margin-left: 100px" /> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <center>
+                        <!-- <table class="table table-striped table-hover" style="width: 1000px;">
+                            <h2 style="font-weight: bold;">Complaint Details</h2><br>
+                            <tr>
+                             <th>Department</th>
+                             <th>Position</th>
+                             <th>Contact</th>
+                                <th>Complaint</th>
+                                <th>Date</th>
+                                <th>Reply</th>
+                            </tr>
+                        
+                            {% for row in q %}
+                            <tr>
+                                <td>{{ row.department}}</td>
+                                <th>{{ row.position }}</th>
+                                <th>{{ row.worker.phone }}</th>
+                                <td>{{ row.complaint_text}}</td>
+                                <td>{{ row.date}}</td>
+                                <td>{{ row.reply}}</td>
+                            </tr>
+                            {% endfor %}
+                            </table> -->
+        </form>
+   
+        
+        </center>
+
+
+<style>
+
+
+    .btn {
+        padding: 3px 10px; /* Adjust padding to control button size */
+        font-size: 14px; /* Adjust font size */
+    }
+            
+            
+ .pagination {
+        margin: 20px 0;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    .pagination .step-links a {
+        display: inline-block;
+        padding: 6px 12px; /* Adjusted padding for smaller buttons */
+        margin: 0 4px;
+        background-color: #007bff; /* Light blue background */
+        border: 1px solid #007bff; /* Light blue border */
+        text-decoration: none;
+        color: #fff;
+        border-radius: 4px;
+        font-size: 14px; /* Adjusted font size */
+    }
+    .pagination .step-links a:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+        border-color: #0056b3;
+    }
+    .pagination .step-links .current {
+        display: inline-block;
+        padding: 6px 12px; /* Adjusted padding for smaller current page indicator */
+        margin: 0 4px;
+        background-color: #f2f2f2;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px; /* Adjusted font size */
+    }
+
+    body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-image: url('/static/bggng.png');
+        margin: 0;
+        padding: 0;
+
+        background-repeat: no-repeat;
+        background-size: cover;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+
+    form {
+        width: 50%;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    th,
+    td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+        background-color: rgb(27, 19, 8);
+        color: #ffffff;
+    }
+
+    tr:hover {
+        background-color: rgba(34, 31, 70, 0.108);
+    }
+
+    a {
+        text-decoration: none;
+        color: #3498db;
+        transition: color 0.3s;
+        font-weight: bold;
+    }
+
+    a:hover {
+        color: #2980b9;
+    }
+
+    /* Responsive styles */
+    @media only screen and (max-width: 600px) {
+        table {
+            width: 100%;
+        }
+
+        th,
+        td {
+            display: block;
+            width: 100%;
+        }
+    }
+</style>

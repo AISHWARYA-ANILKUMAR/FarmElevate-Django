@@ -1,0 +1,232 @@
+{%include 'worker_header.html'%}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/admin_home">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+
+  <center>
+    <section class="section dashboard">
+
+<br>
+<br>
+
+
+<table align="center" class="table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Date_Time</th>
+        <th>location</th>
+        <th>No Of Slots</th>
+        <th>Registration Fees</th>
+
+        <!-- <th>Status</th> -->
+        <th>Join</th>
+    </tr>
+</thead>
+    {% for obj in obj %}
+    <tbody>
+    <tr>
+        <td>{{obj.row_number}}</td>
+        <td>{{obj.title}}</td>
+        <td>{{obj.description}}</td>
+        <td>{{obj.date_time}}</td>
+        <td>{{obj.location}}</td>
+        <td>{{obj.no_of_slots}}</td>
+        <td>{{obj.reg_fees}}</td>
+        <!-- <td>{{row.status}}</td> -->
+        {% if obj.no_of_slots != '0' %}
+        <td><a href="/workshop_join/{{obj.id}}/{{obj.reg_fees}}" class="btn btn-success">join</a></td>
+        {%endif%}
+        
+        
+    </tr>
+</tbody>
+
+    {%endfor%}
+</table>
+    
+  
+          </div>
+        </section>
+      </center>
+
+      <div class="pagination">
+        <span class="step-links">
+            {% if obj.has_previous %}
+            <a href="?page={{obj.previous_page_number}}" class="btn">&laquo; Previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{obj.number}} of {{obj.paginator.num_pages}}.
+            </span>
+    
+            {% if obj.has_next %}
+            <a href="?page={{obj.next_page_number}}" class="btn">Next &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    
+              </div>
+            </section>
+          </center>
+    
+            <style>
+    
+                .btn {
+                    padding: 3px 10px; /* Adjust padding to control button size */
+                    font-size: 14px; /* Adjust font size */
+                }
+                        
+                        
+             .pagination {
+                    margin: 20px 0;
+                    text-align: center;
+                    display: flex;
+                    justify-content: center;
+                }
+                .pagination .step-links a {
+                    display: inline-block;
+                    padding: 6px 12px; /* Adjusted padding for smaller buttons */
+                    margin: 0 4px;
+                    background-color: #007bff; /* Light blue background */
+                    border: 1px solid #007bff; /* Light blue border */
+                    text-decoration: none;
+                    color: #fff;
+                    border-radius: 4px;
+                    font-size: 14px; /* Adjusted font size */
+                }
+                .pagination .step-links a:hover {
+                    background-color: #0056b3; /* Darker blue on hover */
+                    border-color: #0056b3;
+                }
+                .pagination .step-links .current {
+                    display: inline-block;
+                    padding: 6px 12px; /* Adjusted padding for smaller current page indicator */
+                    margin: 0 4px;
+                    background-color: #f2f2f2;
+                    color: #333;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    font-size: 14px; /* Adjusted font size */
+                }
+              
+            </style>
+        
+          </main><!-- End #main -->
+    
+    
+    
+    
+    <style>
+      
+    </style>
+    
+    </main>
+    
+    
+    
+
+
+<script src="
+https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+    </script>
+<script>
+    $(function() {
+        $("input[name='name']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+        $("input[name='lname']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+		$("input[name='hname']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+		$("input[name='street']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+		$("input[name='city']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+		$("input[name='state']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+        // $("input[name='dob']").on('input', function(e) {
+        //     $(this).val($(this).val().replace(/[^0-9/]/g, ''));
+
+        // });
+        
+        $("input[name='phone']").on('input', function(e) {
+    // Get the current value of the input field
+    var inputValue = $(this).val();
+
+    // Remove any non-numeric characters
+    var numericValue = inputValue.replace(/[^0-9]/g, '');
+
+    // Limit the numeric value to 10 characters
+    var truncatedValue = numericValue.substring(0, 10);
+
+    // Set the truncated value back to the input field
+    $(this).val(truncatedValue);
+});
+        $("input[name='pin']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9]/g, ''));
+            
+        });
+        $("input[name='email']").on('input', function(e) {
+              var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{1,}/.test(this.value);
+                if(!re) {
+                    $('#eerror').show();
+                } else {
+                    $('#eerror').hide();
+                }
+
+        });
+        $("input[name='address']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z0-9()/. ]/g, ''));
+
+        });
+        $("input[name='place']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+            
+        $("input[name='pwd']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9A-Za-z@/. ]/g, ''));
+            
+        });
+    });
+
+
+
+   var check = function() {
+  if (document.getElementById('password').value ==
+    document.getElementById('confirm_password').value) {
+    document.getElementById('message').style.color = 'green';
+    document.getElementById('message').innerHTML = 'matching';
+  } else {
+    document.getElementById('message').style.color = 'red';
+    document.getElementById('message').innerHTML = 'not matching';
+  }
+}
+</script>
+
+
